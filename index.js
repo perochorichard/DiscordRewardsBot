@@ -7,10 +7,13 @@ client.on("ready", () => {
     console.log('Discord rewards bot is online');
 });
 
-client.on("message", msg => {
-    if (!msg.author.bot) {
-        const commandIdentifier = msg.content.split(" ")[0];
-        msg.reply("command identifier: " + commandIdentifier);
+client.on("message", recievedMessage => {
+    if (recievedMessage.author == client.user) { // bot will not respond to itself
+        return;
+    }
+
+    if (recievedMessage.content.startsWith("!")) {
+        require("./utility/processCommand").processCommand(recievedMessage);
     }
 });
 

@@ -8,13 +8,9 @@ client.on("ready", () => {
 });
 
 client.on("message", msg => {
-    switch (msg.content) {
-        case '!help':
-            msg.reply('help page to be created');
-            break;
-        case '!create':
-            msg.reply('generating reward key...');
-            break;
+    if (!msg.author.bot) {
+        const commandIdentifier = msg.content.split(" ")[0];
+        msg.reply("command identifier: " + commandIdentifier);
     }
 });
 

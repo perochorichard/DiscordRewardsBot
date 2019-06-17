@@ -13,7 +13,7 @@ client.on("message", recievedMessage => {
     }
 
     if (recievedMessage.content.startsWith("!")) {
-        require("./utility/processCommand").processCommand(recievedMessage);
+        require("./src/model/Utility.js").processCommand(recievedMessage);
     }
 });
 

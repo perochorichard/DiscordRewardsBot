@@ -1,59 +1,31 @@
-const Utility = require("../Utility");
+const CommandUtil = require("../commandUtil");
+const FileIOUtil = require("../FileIOUtil");
+const Key = require("../Key");
+const KeyList = require("../KeyList");
 exports.run = (recievedMessage) => {
-    const args = Utility.getArguments(recievedMessage);
-    if (args.length > 0) {
-        recievedMessage.reply("Arguments: " + args);
-    } else {
-        recievedMessage.reply("no arguments found");
+    const args = CommandUtil.getArguments(recievedMessage);
+    if (args.length > 2 || args.length < 1) {
+        recievedMessage.reply("Invalid number of arguments. \nYou must specify the amount of keys and the value for them." + 
+        "\n example: !create 1 500 creates 1 key with a 500 point target.");
     }
 
     const amount = Number(args[0]);
     const points = Number(args[1]);
 
-    let keyObj = generateKeyObj(points);
-    recievedMessage.reply("your new key is: " + keyObj.key + "\n" +
-    "key points: " + keyObj.targetPoints);
-}
-
-generateKeyObj = (points) => {
-    let keyObj = { targetPoints: points, key: randomKey() };
-    return keyObj;
-}
-
-randomKey = () => {
-    let key = '';
-    for (let i = 0; i < 4; i++) {
-        key += randomSequence() + "-";
+    let keyList = getKeys();
+    for (let i = 0; i < amount; i++) {
+        let tempKey = new Key(points);
+        keyList.addKey(tempKey);
     }
-    key = key.substr(0, key.length - 1);
-    return key;
+    FileIOUtil.fileWrite(FileIOUtil.KEYS_FILE_PATH, JSON.stringify(keyList));
 }
 
-randomSequence = () => {
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let sequenceLength = 5;
-    let sequence = '';
-    for (let i = 0; i < sequenceLength; i++) {
-        sequence += characters.charAt(Math.floor(Math.random() * characters.length));
+getKeys = () => {
+    try {
+        let data = FileIOUtil.fileRead("src/keys.txt");
+        console.log("data: " + data);
+        return JSON.parse(data);
+    } catch(err) {
+        return new KeyList();
     }
-    return sequence;
-}
-
-FileIO = () => {
-        // READING
-        const fs = require("fs");
-        fs.readFile("src/hits.txt", "utf8", function (err, buf) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            console.log(buf);
-        });
-    
-        // WRITING
-        let data = "hello world";
-        fs.writeFile("temp.txt", data, (err) => {
-            if (err) console.log(err);
-            console.log("Successfully Written to File.");
-        });
 }

@@ -29,5 +29,15 @@ exports.run = (recievedMessage) => {
         keyCollection.addKey(tempKey);
     }
     keyCollection.saveToFile();
-    recievedMessage.reply("your keys have been generated. !list to see them");
+    
+    let response = '';
+    if (amount > 1) {
+        response = ":wave: here are your keys\n";
+        for (let i = amount; i > 0; i--) {
+            response += keyCollection.keys[keyCollection.keys.length - i].id + "\n";
+        }
+    } else {
+        response = ":wave: " + keyCollection.keys[keyCollection.keys.length - 1].id + " is your key";
+    }
+    recievedMessage.reply(response);
 }

@@ -2,6 +2,7 @@ const CommandUtil = require("../commandUtil");
 const FileIOUtil = require("../FileIOUtil");
 const Key = require("../Key");
 const KeyCollection = require("../KeyCollection");
+
 exports.run = (recievedMessage) => {
     const args = CommandUtil.getArguments(recievedMessage);
     if (args.length > 2 || args.length < 1) {
@@ -12,10 +13,9 @@ exports.run = (recievedMessage) => {
     const amount = Number(args[0]);
     const points = Number(args[1]);
 
-    let keyCollection = KeyCollection.getKeys();
+    let keyCollection = KeyCollection.getKeyCollection();
     for (let i = 0; i < amount; i++) {
         let tempKey = new Key(points);
-
         for (let i = 0; i < 100; i++) { // check key duplication
             if (keyCollection.isDuplicate(tempKey.id)) {
                 console.log("key id was duplicate. generating new key...");

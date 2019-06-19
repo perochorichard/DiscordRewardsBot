@@ -17,7 +17,14 @@ class KeyCollection {
     }
 }
 
-getKeys = () => {
+parseToKeyCollection = (data) => {
+    const temp = JSON.parse(data);
+    let keyCollection = new KeyCollection();
+    keyCollection.keys = temp.keys;
+    return keyCollection;
+}
+
+exports.getKeyCollection = () => {
     try {
         const FileIOUtil = require("./FileIOUtil");
         let data = FileIOUtil.fileRead(FileIOUtil.KEYS_FILE_PATH);
@@ -26,15 +33,3 @@ getKeys = () => {
         return new KeyCollection();
     }
 }
-
-parseToKeyCollection = (data) => {
-    const temp = JSON.parse(data);
-    let keyCollection = new KeyCollection();
-    keyCollection.keys = temp.keys;
-    return keyCollection;
-}
-
-module.exports = {
-    KeyCollection,
-    getKeys
-};

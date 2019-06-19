@@ -1,7 +1,7 @@
 const CommandUtil = require("../commandUtil");
 const FileIOUtil = require("../FileIOUtil");
 const Key = require("../Key");
-const KeyList = require("../KeyList");
+const KeyCollection = require("../KeyCollection");
 exports.run = (recievedMessage) => {
     const args = CommandUtil.getArguments(recievedMessage);
     if (args.length > 2 || args.length < 1) {
@@ -12,20 +12,20 @@ exports.run = (recievedMessage) => {
     const amount = Number(args[0]);
     const points = Number(args[1]);
 
-    let keyList = getKeys();
+    let keyCollection = KeyCollection.getKeys();
     for (let i = 0; i < amount; i++) {
         let tempKey = new Key(points);
-        keyList.addKey(tempKey);
-    }
-    FileIOUtil.fileWrite(FileIOUtil.KEYS_FILE_PATH, JSON.stringify(keyList));
-}
 
-getKeys = () => {
-    try {
-        let data = FileIOUtil.fileRead("src/keys.txt");
-        console.log("data: " + data);
-        return JSON.parse(data);
-    } catch(err) {
-        return new KeyList();
+        for (let i = 0; i < 100; i++) { // check key duplication
+            if (keyCollection.isDuplicate(tempKey.id)) {
+                console.log("key id was duplicate. generating new key...");
+                tempKey = new Key(points);
+            } else {
+                break;
+            }
+        }
+
+        keyCollection.addKey(tempKey);
     }
+    FileIOUtil.fileWrite(FileIOUtil.KEYS_FILE_PATH, JSON.stringify(keyCollection));
 }

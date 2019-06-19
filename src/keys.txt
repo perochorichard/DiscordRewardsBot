@@ -1,1 +1,1 @@
-{"keys":[{"targetPoints":2000,"id":"KOWS0-S5QWI-M1W24-WP4JI"},{"targetPoints":2000,"id":"62OGN-31SSE-Y9VAA-I3LSY"}]}
+{"keys":[{"targetPoints":500,"id":"WX7PK-N6YI3-DSKHX-LA1L3"},{"targetPoints":500,"id":"KENIA-HLNSX-J6OX4-KBLV6"}]}

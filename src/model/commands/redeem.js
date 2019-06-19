@@ -1,8 +1,12 @@
 const CommandUtil = require("../CommandUtil");
 const KeyCollection = require("../KeyCollection");
-const FileIOUtil = require("../FileIOUtil");
+const RewardCollection = require("../RewardCollection");
+let rewardCollection = undefined;
+let keyCollection = undefined;
 
 exports.run = (recievedMessage) => {
+    rewardCollection = RewardCollection.getRewards();
+    keyCollection = KeyCollection.getKeyCollection();
     const args = CommandUtil.getArguments(recievedMessage);
 
     if (args.length !== 1) {
@@ -12,15 +16,29 @@ exports.run = (recievedMessage) => {
     }
 
     const id = args.pop();
-    let key = KeyCollection.getKeyCollection().getKey(id);
+    let key = keyCollection.getKey(id);
     if (key !== null) {
-        redeem(key);
-        recievedMessage.reply("key successfully redeemed.");
+        let reward = redeem(key);
+        rewardCollection.removeReward(reward);
+        rewardCollection.saveToFile();
+        keyCollection.removeKey(key);
+        keyCollection.saveToFile();
+        recievedMessage.reply("key successfully redeemed. Key: " + reward.card + " : " + reward.points);
     } else {
         recievedMessage.reply("The key you entered was not found or has already been redeemed.");
     }
 }
 
 redeem = (key) => {
-    let rewards = FileIOUtil.fileRead(FileIOUtil.REWARDS_FILE_PATH); // TODO: create reward objects to list
+    let closestDifference = rewardCollection.rewards[0].points - key.targetPoints;
+    let closestReward = rewardCollection.rewards[0];
+    for (let i = 1; i < rewardCollection.rewards.length; i++) { // looks for the points value closest to the key's target points value.
+        let reward = rewardCollection.rewards[i];
+        let difference = reward.points - key.targetPoints;
+        if (difference > 0 && difference < closestDifference) {
+            closestDifference = difference;
+            closestReward = reward;
+        }
+    }
+    return closestReward;
 }

@@ -31,6 +31,16 @@ class KeyCollection {
         return null;
     }
 
+    removeKey(key) {
+        for (let i = 0; i < this.keys.length; i++) {
+            let temp = this.keys[i];
+            if (temp.id === key.id) {
+                this.keys.splice(i, 1); // replaces 1 element at index i with nothing (delete)
+                return;
+            }
+        }
+    }
+
     saveToFile() {
         FileIOUtil.fileWrite(FileIOUtil.KEYS_FILE_PATH, JSON.stringify(this));
     }

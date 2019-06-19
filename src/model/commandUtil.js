@@ -20,7 +20,8 @@ getCommand = (primaryCommand) => {
     try {
         let command = require("./commands/" + primaryCommand);
         return command;
-    } catch {
+    } catch (err) {
+        console.log(err);
         return null;
     }
 }

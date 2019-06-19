@@ -27,5 +27,6 @@ exports.run = (recievedMessage) => {
 
         keyCollection.addKey(tempKey);
     }
-    FileIOUtil.fileWrite(FileIOUtil.KEYS_FILE_PATH, JSON.stringify(keyCollection));
+    keyCollection.saveToFile();
+    recievedMessage.reply("your keys have been generated. !list to see them");
 }

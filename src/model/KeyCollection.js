@@ -1,3 +1,5 @@
+const FileIOUtil = require("./FileIOUtil");
+
 class KeyCollection {
     constructor() {
         this.keys = [];
@@ -15,6 +17,14 @@ class KeyCollection {
         }
         return false;
     }
+
+    clear() {
+        this.keys = [];
+    }
+
+    saveToFile() {
+        FileIOUtil.fileWrite(FileIOUtil.KEYS_FILE_PATH, JSON.stringify(this));
+    }
 }
 
 parseToKeyCollection = (data) => {
@@ -26,10 +36,9 @@ parseToKeyCollection = (data) => {
 
 exports.getKeyCollection = () => {
     try {
-        const FileIOUtil = require("./FileIOUtil");
         let data = FileIOUtil.fileRead(FileIOUtil.KEYS_FILE_PATH);
         return parseToKeyCollection(data);
-    } catch(err) {
+    } catch (err) {
         return new KeyCollection();
     }
 }

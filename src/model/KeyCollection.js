@@ -22,6 +22,15 @@ class KeyCollection {
         this.keys = [];
     }
 
+    getKey(id) {
+        for (let i = 0; i < this.keys.length; i++) {
+            if (this.keys[i].id === id) {
+                return this.keys[i];
+            }
+        }
+        return null;
+    }
+
     saveToFile() {
         FileIOUtil.fileWrite(FileIOUtil.KEYS_FILE_PATH, JSON.stringify(this));
     }

@@ -1,1 +1,1 @@
-{"keys":[]}
+{"keys":[{"targetPoints":2000,"id":"KOWS0-S5QWI-M1W24-WP4JI"},{"targetPoints":2000,"id":"62OGN-31SSE-Y9VAA-I3LSY"}]}

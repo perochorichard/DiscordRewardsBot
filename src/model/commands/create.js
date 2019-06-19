@@ -1,4 +1,4 @@
-const CommandUtil = require("../commandUtil");
+const CommandUtil = require("../CommandUtil");
 const FileIOUtil = require("../FileIOUtil");
 const Key = require("../Key");
 const KeyCollection = require("../KeyCollection");
@@ -8,6 +8,7 @@ exports.run = (recievedMessage) => {
     if (args.length > 2 || args.length < 1) {
         recievedMessage.reply("Invalid number of arguments. \nYou must specify the amount of keys and the value for them." + 
         "\n example: !create 1 500 creates 1 key with a 500 point target.");
+        return;
     }
 
     const amount = Number(args[0]);

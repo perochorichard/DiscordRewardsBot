@@ -35,14 +35,16 @@ class RewardCollection {
     }
 }
 
- exports.getRewards = () => {
+exports.getRewards = () => {
     let data = FileIOUtil.fileRead(FileIOUtil.REWARDS_FILE_PATH).split("\n");
     let rewardCollection = new RewardCollection();
     for (let i = 0; i < data.length; i++) {
         let info = data[i].split(" : ");
-        let cardNumber = info[0];
-        let points = Number(info[1]);
-        rewardCollection.addReward(new Reward(cardNumber, points));
+        if (info.length === 2) {
+            let cardNumber = info[0];
+            let points = Number(info[1]);
+            rewardCollection.addReward(new Reward(cardNumber, points));
+        }
     }
     return rewardCollection;
- }
+}

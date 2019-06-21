@@ -8,12 +8,16 @@ client.on("ready", () => {
 });
 
 client.on("message", recievedMessage => {
-    if (recievedMessage.author == client.user) { // bot will not respond to itself
+    if (recievedMessage.author == client.user) {
+        return;
+    }
+    if (recievedMessage.channel.type !== "dm") {
+        recievedMessage.reply("this bot only operates in dm chat.");
         return;
     }
 
     if (recievedMessage.content.startsWith("!")) {
-        require("./src/model/commandUtil.js").processCommand(recievedMessage);
+        require("./src/model/CommandUtil").processCommand(recievedMessage);
     }
 });
 

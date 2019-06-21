@@ -23,7 +23,8 @@ exports.run = (recievedMessage) => {
         rewardCollection.saveToFile();
         keyCollection.removeKey(key);
         keyCollection.saveToFile();
-        recievedMessage.reply(":gift: key successfully redeemed. Points recieved: " + reward.points + " :gift:");
+        recievedMessage.reply(":gift: key successfully redeemed :gift:" + "\n"
+        + "card: " + reward.card + "\n" + "points: " + reward.points);
     } else {
         recievedMessage.reply("The key you entered could not be redeemed.");
     }

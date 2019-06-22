@@ -3,6 +3,9 @@ const FileIOUtil = require("../FileIOUtil");
 const Key = require("../Key");
 const KeyCollection = require("../KeyCollection");
 
+/**
+ * command generates an amount of keys with given points value.
+ */
 exports.run = (recievedMessage) => {
     const args = CommandUtil.getArguments(recievedMessage);
     if (args.length > 2 || args.length < 1) {

@@ -1,3 +1,6 @@
+/**
+ * Reward object
+ */
 class Reward {
     constructor(card, points) {
         this.card = card;

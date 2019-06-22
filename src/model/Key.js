@@ -1,3 +1,6 @@
+/**
+ * Key object
+ */
 class Key {
     constructor(points) {
         this.targetPoints = points;
@@ -5,6 +8,9 @@ class Key {
     }
 }
 
+/**
+ * chains together 4 sub-keys split by '-'
+ */
 randomKey = () => {
     let key = '';
     for (let i = 0; i < 4; i++) {
@@ -14,6 +20,9 @@ randomKey = () => {
     return key;
 }
 
+/**
+ * generates random sub-key of 5 alphanumeric characters
+ */
 randomSequence = () => {
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let sequenceLength = 5;

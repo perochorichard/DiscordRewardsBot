@@ -1,15 +1,25 @@
 const FileIOUtil = require("./FileIOUtil");
 const Reward = require("./Reward");
 
+/**
+ * encapsulates rewards objects in a collection to iterate through
+ */
 class RewardCollection {
     constructor() {
-        this.rewards = [];
+        this.rewards = []; // array of rewards
     }
 
+    /**
+     * adds a reward object to the array of rewards
+     */
     addReward(reward) {
         this.rewards.push(reward);
     }
 
+    /**
+     * removes a given reward from the array.
+     * Does nothing if given reward does not exist in array.
+     */
     removeReward(reward) {
         for (let i = 0; i < this.rewards.length; i++) {
             let temp = this.rewards[i];
@@ -20,10 +30,16 @@ class RewardCollection {
         }
     }
 
+    /**
+     * saves this collection of rewards to a file
+     */
     saveToFile() {
         FileIOUtil.fileWrite(FileIOUtil.REWARDS_FILE_PATH, this.toString());
     }
 
+    /**
+     * parses this collection of rewards to string format
+     */
     toString() {
         let string = '';
         for (let i = 0; i < this.rewards.length; i++) {
@@ -35,6 +51,9 @@ class RewardCollection {
     }
 }
 
+/**
+ * parses rewards from file to the RewardCollection object
+ */
 exports.getRewards = () => {
     let data = FileIOUtil.fileRead(FileIOUtil.REWARDS_FILE_PATH).split("\n");
     let rewardCollection = new RewardCollection();

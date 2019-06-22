@@ -1,14 +1,23 @@
 const FileIOUtil = require("./FileIOUtil");
 
+/**
+ * Encapsulates Key objects in a collection to iterate through
+ */
 class KeyCollection {
     constructor() {
         this.keys = [];
     }
 
+    /**
+     * adds key object to collection of keys 
+     */
     addKey(key) {
         this.keys.push(key);
     }
 
+    /**
+     * checks if given key id already exists within the collection. 
+     */
     isDuplicate(id) {
         for (let i = 0; i < this.keys.length; i++) {
             if (this.keys[i].id === id) {
@@ -18,10 +27,17 @@ class KeyCollection {
         return false;
     }
 
+    /**
+     * clears the key colelction
+     */
     clear() {
         this.keys = [];
     }
 
+    /**
+     * returns the key with given id.
+     * returns null if key id is not identified. 
+     */
     getKey(id) {
         for (let i = 0; i < this.keys.length; i++) {
             if (this.keys[i].id === id) {
@@ -31,6 +47,10 @@ class KeyCollection {
         return null;
     }
 
+    /**
+     * removes given key object from collection of keys.
+     * does nothing if key could not be found in collection. 
+     */
     removeKey(key) {
         for (let i = 0; i < this.keys.length; i++) {
             let temp = this.keys[i];
@@ -41,11 +61,18 @@ class KeyCollection {
         }
     }
 
+    /**
+     * saves this KeyCollection object to file as JSON object
+     */
     saveToFile() {
         FileIOUtil.fileWrite(FileIOUtil.KEYS_FILE_PATH, JSON.stringify(this));
     }
 }
 
+/**
+ * parses file data from JSON object to KeyCollection object
+ * for KeyCollection method integrity.
+ */
 parseToKeyCollection = (data) => {
     const temp = JSON.parse(data);
     let keyCollection = new KeyCollection();
@@ -53,6 +80,9 @@ parseToKeyCollection = (data) => {
     return keyCollection;
 }
 
+/**
+ * returns KeyCollection object
+ */
 exports.getKeyCollection = () => {
     try {
         let data = FileIOUtil.fileRead(FileIOUtil.KEYS_FILE_PATH);

@@ -30,6 +30,10 @@ exports.run = (recievedMessage) => {
     }
 }
 
+/**
+ * traverses rewards database and searches for the reward
+ * with the closest points value to the target points of the given key.
+ */
 redeem = (key) => {
     let closestDifference = rewardCollection.rewards[0].points - key.targetPoints;
     let closestReward = rewardCollection.rewards[0];

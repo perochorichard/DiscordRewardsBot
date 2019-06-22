@@ -1,5 +1,8 @@
 const KeyCollection = require("../KeyCollection");
 
+/**
+ * command clears all existing keys.
+ */
 exports.run = (recievedMessage) => {
     let keyCollection = KeyCollection.getKeyCollection();
     keyCollection.clear();
